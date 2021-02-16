@@ -669,9 +669,6 @@ TEST(SimdUtilsTest, movq) {
 #elif defined(ARCH_ARM32) || defined(ARCH_AARCH64)
     int64x2_t a = { 0x123456789abcdefLL, ~0LL };
     simd = vreinterpretq_s64_s8(a);
-#elif defined(ARCH_PPC64EL)
-    __vector s64a a = { 0x123456789abcdefLL, ~0LL };
-    simd = (m128) a;
 #endif
 #endif
     r = movq(simd);

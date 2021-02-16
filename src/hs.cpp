@@ -47,6 +47,7 @@
 #include "util/arch/common/cpuid_flags.h"
 #if defined(ARCH_IA32) || defined(ARCH_X86_64)
 #include "util/arch/x86/cpuid_inline.h"
+#elif defined(ARCH_ARM32) || defined(ARCH_AARCH64)
 #endif
 #include "util/depth.h"
 #include "util/popcount.h"

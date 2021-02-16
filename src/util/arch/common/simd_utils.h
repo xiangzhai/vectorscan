@@ -39,7 +39,6 @@
 #include "util/intrinsics.h"
 
 #include <string.h> // for memcpy
-#include <stdlib.h> // for memcpy
 
 #if !defined(HAVE_SIMD_128_BITS)
 #error "You need at least a 128-bit capable SIMD engine!"
