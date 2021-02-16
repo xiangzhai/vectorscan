@@ -30,6 +30,9 @@
 #define SIMD_TYPES_ARM_H
 
 #if !defined(m128) && defined(HAVE_VSX)
+#undef vector
+#undef bool
+#undef pixel
 typedef __vector int32_t m128;
 #endif
 
