@@ -1,4 +1,4 @@
-vectorscan (5.4.6.1) unstable; urgency=medium
+vectorscan (5.4.6-1) unstable; urgency=medium
 
   * Initial release. (Closes: #1004079)
 
