@@ -9,12 +9,12 @@ Build-Depends: cmake (>=2.8.11),
                po-debconf,
                python3,
                ragel (>=6.9)
-Standards-Version: 4.5.1
+Standards-Version: 4.6.0
 Section: libs
 Rules-Requires-Root: no
 Homepage: https://vectorcamp.gr/vectorscan
-Vcs-Git: https://salsa.debian.org/debian/hyperscan.git
-Vcs-Browser: https://salsa.debian.org/debian/vectorscan
+Vcs-Git: https://github.com/VectorCamp/vectorscan.git
+Vcs-Browser: https://github.com/VectorCamp/vectorscan
 
 Package: libvectorscan-dev
 Section: libdevel
@@ -39,6 +39,7 @@ Description: Portable fork of Intel's Hyperscan library (development files)
 Package: libvectorscan5
 Architecture: any-amd64 arm64 ppc64el
 Depends: ${misc:Depends}, ${shlibs:Depends}, sse4.2-support [any-amd64]
+Multi-Arch: same
 Pre-Depends: debconf
 Replaces: libhyperscan5
 Conflicts: libhyperscan5
