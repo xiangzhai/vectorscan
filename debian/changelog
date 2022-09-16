@@ -1,4 +1,4 @@
-vectorscan (5.4.8-2) UNRELEASED; urgency=medium
+vectorscan (5.4.8-2) unstable; urgency=medium
 
   * Remove constraints unnecessary since buster (oldstable):
     + Build-Depends: Drop versioned constraint on cmake, libboost-dev and ragel.
