@@ -9,7 +9,7 @@ Build-Depends: cmake,
                po-debconf,
                python3,
                ragel
-Standards-Version: 4.6.0
+Standards-Version: 4.6.1
 Section: libs
 Rules-Requires-Root: no
 Homepage: https://vectorcamp.gr/vectorscan
