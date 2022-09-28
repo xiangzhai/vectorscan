@@ -1,3 +1,12 @@
+vectorscan (5.4.8-3) UNRELEASED; urgency=medium
+
+  * Trim trailing whitespace.
+  * Bump debhelper from old 12 to 13.
+    + debian/rules: Drop --fail-missing argument to dh_missing, which is now the
+      default.
+
+ -- Debian Janitor <janitor@jelmer.uk>  Fri, 16 Sep 2022 09:27:31 -0000
+
 vectorscan (5.4.8-2) unstable; urgency=medium
 
   * Remove constraints unnecessary since buster (oldstable):
@@ -7,7 +16,7 @@ vectorscan (5.4.8-2) unstable; urgency=medium
 
 vectorscan (5.4.8-1) unstable; urgency=medium
 
-  * New upstream release 
+  * New upstream release
 
  -- Konstantinos Margaritis <markos@debian.org>  Tue, 13 Sep 2022 16:38:56 +0300
 
