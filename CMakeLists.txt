@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.18.4)
+cmake_minimum_required (VERSION 3.13.4)
 
 project (vectorscan C CXX)
 
@@ -127,6 +127,8 @@ elseif (ARCH_ARM32 OR ARCH_AARCH64)
     include (${CMAKE_MODULE_PATH}/cflags-arm.cmake)
 elseif (ARCH_PPC64EL)
     include (${CMAKE_MODULE_PATH}/cflags-ppc64le.cmake)
+elseif (ARCH_LOONGARCH64)
+    include (${CMAKE_MODULE_PATH}/cflags-loongarch64.cmake)
 else ()
     message(FATAL_ERROR "Unsupported platform")
 endif ()
@@ -160,6 +162,11 @@ foreach (CONFIG ${CMAKE_BUILD_TYPE} ${CMAKE_CONFIGURATION_TYPES})
     string(REGEX REPLACE "-O[^ ]*" "" CMAKE_CXX_FLAGS_${CONFIG} "${CMAKE_CXX_FLAGS_${CONFIG}}")
 endforeach ()
 
+if (ARCH_LOONGARCH64)
+    set(ARCH_C_FLAGS "-mlsx")
+    set(ARCH_CXX_FLAGS "-mlsx")
+endif(ARCH_LOONGARCH64)
+
 message(STATUS "ARCH_C_FLAGS   : ${ARCH_C_FLAGS}")
 message(STATUS "ARCH_CXX_FLAGS : ${ARCH_CXX_FLAGS}")
 
@@ -186,7 +193,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${ARCH_CXX_FLAGS}")
 # PCRE check, we have a fixed requirement for PCRE to use Chimera
 # and hscollider
 set(PCRE_REQUIRED_MAJOR_VERSION 8)
-set(PCRE_REQUIRED_MINOR_VERSION 41)
+set(PCRE_REQUIRED_MINOR_VERSION 39)
 set(PCRE_REQUIRED_VERSION ${PCRE_REQUIRED_MAJOR_VERSION}.${PCRE_REQUIRED_MINOR_VERSION})
 include (${CMAKE_MODULE_PATH}/pcre.cmake)
 if (NOT CORRECT_PCRE_VERSION)
@@ -264,6 +271,11 @@ elseif (ARCH_PPC64EL)
 set (hs_exec_common_SRCS
     ${hs_exec_common_SRCS}
     src/util/arch/ppc64el/cpuid_flags.c)
+elseif (ARCH_LOONGARCH64)
+set (hs_exec_common_SRCS
+    ${hs_exec_common_SRCS}
+    src/util/arch/loongarch64/cpuid_flags.c
+    )
 endif ()
 
 set (hs_exec_SRCS
@@ -427,6 +439,11 @@ set (hs_exec_SRCS
     ${hs_exec_SRCS}
     src/nfa/vermicelli_simd.cpp
     src/util/supervector/arch/ppc64el/impl.cpp)
+elseif (ARCH_LOONGARCH64)
+set (hs_exec_SRCS
+    ${hs_exec_SRCS}
+    src/nfa/vermicelli_simd.cpp
+    src/util/supervector/arch/loongarch64/impl.cpp)
 endif()
 
 if (ARCH_IA32 OR ARCH_X86_64)

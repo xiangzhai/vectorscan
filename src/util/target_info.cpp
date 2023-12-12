@@ -32,6 +32,7 @@
 #include "util/arch/common/cpuid_flags.h"
 #if defined(ARCH_IA32) || defined(ARCH_X86_64)
 #elif defined(ARCH_ARM32) || defined(ARCH_AARCH64)
+#elif defined(ARCH_LOONGARCH64)
 #endif
 
 namespace ue2 {

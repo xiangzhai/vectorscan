@@ -1,5 +1,7 @@
 /*
- * Copyright (c) 2017, Intel Corporation
+ * Copyright (c) 2015-2017, Intel Corporation
+ * Copyright (c) 2020-2021, VectorCamp PC
+ * Copyright (c) 2023, Loongson Technology
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -27,59 +29,35 @@
  */
 
 /** \file
- * \brief Wrapper around the compiler supplied intrinsic header
+ * \brief Truffle: character class acceleration.
+ *
  */
 
-#ifndef INTRINSICS_H
-#define INTRINSICS_H
+template <uint16_t S>
+static really_inline
+const SuperVector<S> blockSingleMask(SuperVector<S> shuf_mask_lo_highclear, SuperVector<S> shuf_mask_lo_highset, SuperVector<S> chars) {
 
-#include "config.h"
+    chars.print8("chars");
+    shuf_mask_lo_highclear.print8("shuf_mask_lo_highclear");
+    shuf_mask_lo_highset.print8("shuf_mask_lo_highset");
 
-#ifdef __cplusplus
-# if defined(HAVE_CXX_X86INTRIN_H)
-#  define USE_X86INTRIN_H
-# endif
-#else // C
-# if defined(HAVE_C_X86INTRIN_H)
-#  define USE_X86INTRIN_H
-# endif
-#endif
+    SuperVector<S> highconst = SuperVector<S>::dup_u8(0x80);
+    highconst.print8("highconst");
+    SuperVector<S> shuf_mask_hi = SuperVector<S>::dup_u64(0x8040201008040201);
+    shuf_mask_hi.print8("shuf_mask_hi");
+    
+    SuperVector<S> shuf1 = shuf_mask_lo_highclear.pshufb(chars);
+    shuf1.print8("shuf1");
+    SuperVector<S> t1 = chars ^ highconst;
+    t1.print8("t1");
+    SuperVector<S> shuf2 = shuf_mask_lo_highset.pshufb(t1);
+    shuf2.print8("shuf2");
+    SuperVector<S> t2 = highconst.opandnot(chars.template vshr_64_imm<4>());
+    t2.print8("t2");
+    SuperVector<S> shuf3 = shuf_mask_hi.pshufb(t2);
+    shuf3.print8("shuf3");
+    SuperVector<S> res = (shuf1 | shuf2) & shuf3;
+    res.print8("(shuf1 | shuf2) & shuf3");
 
-#if defined(HAVE_C_ARM_NEON_H)
-#  define USE_ARM_NEON_H
-#endif
-
-#if defined(HAVE_C_PPC64EL_ALTIVEC_H)
-#  define USE_PPC64EL_ALTIVEC_H
-#endif
-
-#if defined(HAVE_C_LOONGARCH64_LSXINTRIN_H)
-#  define USE_LOONGARCH64_LSXINTRIN_H
-#endif
-
-#ifdef __cplusplus
-# if defined(HAVE_CXX_INTRIN_H)
-#  define USE_INTRIN_H
-# endif
-#else // C
-# if defined(HAVE_C_INTRIN_H)
-#  define USE_INTRIN_H
-# endif
-#endif
-
-#if defined(USE_X86INTRIN_H)
-#include <x86intrin.h>
-#elif defined(USE_INTRIN_H)
-#include <intrin.h>
-#elif defined(USE_ARM_NEON_H)
-#include <arm_neon.h>
-#  if defined(HAVE_SVE)
-#    include <arm_sve.h>
-#  endif
-#elif defined(USE_PPC64EL_ALTIVEC_H)
-#include <altivec.h>
-#elif defined(USE_LOONGARCH64_LSXINTRIN_H)
-#include <lsxintrin.h>
-#endif
-
-#endif // INTRINSICS_H
+    return !res.eq(SuperVector<S>::Zeroes());
+}

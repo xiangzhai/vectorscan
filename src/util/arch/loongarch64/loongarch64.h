@@ -1,5 +1,7 @@
 /*
- * Copyright (c) 2017, Intel Corporation
+ * Copyright (c) 2017-2020, Intel Corporation
+ * Copyright (c) 2020-2021, VectorCamp PC
+ * Copyright (c) 2023, Loongson Technology
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -27,59 +29,19 @@
  */
 
 /** \file
- * \brief Wrapper around the compiler supplied intrinsic header
+ * \brief Per-platform architecture definitions
  */
 
-#ifndef INTRINSICS_H
-#define INTRINSICS_H
+#ifndef UTIL_ARCH_LOONGARCH64_H_
+#define UTIL_ARCH_LOONGARCH64_H_
 
-#include "config.h"
+#define HAVE_LSX
+#define HAVE_SIMD_128_BITS
 
-#ifdef __cplusplus
-# if defined(HAVE_CXX_X86INTRIN_H)
-#  define USE_X86INTRIN_H
-# endif
-#else // C
-# if defined(HAVE_C_X86INTRIN_H)
-#  define USE_X86INTRIN_H
-# endif
+#if defined(HAVE_SIMD_128_BITS)
+#define CHUNKSIZE 128
+#define VECTORSIZE 16
 #endif
 
-#if defined(HAVE_C_ARM_NEON_H)
-#  define USE_ARM_NEON_H
-#endif
+#endif // UTIL_ARCH_LOONGARCH64_H_
 
-#if defined(HAVE_C_PPC64EL_ALTIVEC_H)
-#  define USE_PPC64EL_ALTIVEC_H
-#endif
-
-#if defined(HAVE_C_LOONGARCH64_LSXINTRIN_H)
-#  define USE_LOONGARCH64_LSXINTRIN_H
-#endif
-
-#ifdef __cplusplus
-# if defined(HAVE_CXX_INTRIN_H)
-#  define USE_INTRIN_H
-# endif
-#else // C
-# if defined(HAVE_C_INTRIN_H)
-#  define USE_INTRIN_H
-# endif
-#endif
-
-#if defined(USE_X86INTRIN_H)
-#include <x86intrin.h>
-#elif defined(USE_INTRIN_H)
-#include <intrin.h>
-#elif defined(USE_ARM_NEON_H)
-#include <arm_neon.h>
-#  if defined(HAVE_SVE)
-#    include <arm_sve.h>
-#  endif
-#elif defined(USE_PPC64EL_ALTIVEC_H)
-#include <altivec.h>
-#elif defined(USE_LOONGARCH64_LSXINTRIN_H)
-#include <lsxintrin.h>
-#endif
-
-#endif // INTRINSICS_H

@@ -55,5 +55,7 @@ hs_error_t HS_CDECL hs_valid_platform(void) {
     }
 #elif defined(ARCH_PPC64EL) || defined(VS_SIMDE_BACKEND)
     return HS_SUCCESS;
+#elif defined(ARCH_LOONGARCH64)
+    return HS_SUCCESS;    
 #endif
 }

@@ -1,7 +1,7 @@
 # About Vectorscan
 
-A fork of Intel's Hyperscan, modified to run on more platforms. Currently ARM NEON/ASIMD
-and Power VSX are 100% functional. ARM SVE2 support is in ongoing with
+A fork of Intel's Hyperscan, modified to run on more platforms. Currently ARM NEON/ASIMD,
+Power VSX and LoongArch LSX are 100% functional. ARM SVE2 support is in ongoing with
 access to hardware now. More platforms will follow in the future.
 Further more, starting 5.4.12 there is now a [SIMDe](https://github.com/simd-everywhere/simde)
 port, which can be either used for platforms without official SIMD support,

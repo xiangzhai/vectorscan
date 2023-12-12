@@ -41,7 +41,9 @@
 #include "util/arch/arm/arm.h"
 #elif defined(ARCH_PPC64EL)
 #include "util/arch/ppc64el/ppc64el.h"
+#elif defined(ARCH_LOONGARCH64)
+#include "util/arch/loongarch64/loongarch64.h"
 #endif
 
-#endif // UTIL_ARCH_X86_H_
+#endif // UTIL_ARCH_H_
 

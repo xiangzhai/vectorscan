@@ -24,6 +24,9 @@
 /* "Define if building for PPC64EL" */
 #cmakedefine ARCH_PPC64EL
 
+/* "Define if building for LOONGARCH64" */
+#cmakedefine ARCH_LOONGARCH64
+
 /* "Define if cross compiling for AARCH64" */
 #cmakedefine CROSS_COMPILE_AARCH64
 
@@ -80,6 +83,9 @@
 
 /* C compiler has arm_neon.h */
 #cmakedefine HAVE_C_PPC64EL_ALTIVEC_H
+
+/* C compiler has lsxintrin.h */
+#cmakedefine HAVE_C_LOONGARCH64_LSXINTRIN_H
 
 /* Define to 1 if you have the declaration of `pthread_setaffinity_np', and to
    0 if you don't. */
