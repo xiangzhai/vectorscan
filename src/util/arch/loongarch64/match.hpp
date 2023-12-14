@@ -28,24 +28,6 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-static really_inline m128 vpmax_loongarch(v4u32 a, v4u32 b) {
-    u32 result[4];
-    u32 tmp1 = __lsx_vpickve2gr_wu(a, 0);
-    u32 tmp2 = __lsx_vpickve2gr_wu(a, 1);
-    result[0] = (tmp1 >= tmp2) ? tmp1 : tmp2;
-    tmp1 = __lsx_vpickve2gr_wu(a, 2);
-    tmp2 = __lsx_vpickve2gr_wu(a, 3);
-    result[1] = (tmp1 >= tmp2) ? tmp1 : tmp2;
-    tmp1 = __lsx_vpickve2gr_wu(b, 0);
-    tmp2 = __lsx_vpickve2gr_wu(b, 1);
-    result[2] = (tmp1 >= tmp2) ? tmp1 : tmp2;
-    tmp1 = __lsx_vpickve2gr_wu(b, 2);
-    tmp2 = __lsx_vpickve2gr_wu(b, 3);
-    result[3] = (tmp1 >= tmp2) ? tmp1 : tmp2;
-    v4u32 res = __lsx_vld((uint32_t *)result, 0);
-    return res;
-}
-
 template <>
 really_really_inline
 const u8 *first_non_zero_match<16>(const u8 *buf, SuperVector<16> mask, u16 const UNUSED len) {
